@@ -238,7 +238,7 @@ defmodule Iona.Processing do
   defp copy_includes(_directory, []), do: :ok
 
   defp copy_includes(directory, [{:binary, {binary, include}} | remaining]) do
-    case File.write(include, binary) do
+    case File.write(Path.join(directory, Path.basename(include)), binary) do
       :ok -> copy_includes(directory, remaining)
       {:error, reason} -> {:error, "Could not create included file: #{reason}"}
     end
